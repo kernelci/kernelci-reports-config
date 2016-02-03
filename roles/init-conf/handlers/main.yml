@@ -1,0 +1,27 @@
+---
+- name: start-kernelci-reports-get
+  service:  name={{ get_service }}
+            state=started
+
+- name: restart-kernelci-reports-get
+  service:  name={{ get_service }}
+            state=restarted
+
+- name: stop-kernelci-reports-get
+  service:  name={{ get_service }}
+            state=stopped
+
+- name: start-kernelci-reports-send
+  service:  name={{ send_service }}
+            state=started
+
+- name: restart-kernelci-reports-send
+  service:  name={{ send_service }}
+            state=restarted
+
+- name: stop-kernelci-reports-send
+  service:  name={{ send_service }}
+            state=stopped
+
+- name: reload-systemd
+  command: /bin/systemctl daemon-reload

@@ -1,0 +1,77 @@
+---
+- name: Create the default group
+  group: name={{ app_group }} state=present system=yes
+  tags:
+    - install
+    - user
+
+- name: Create default user
+  user: name={{ app_user }} state=present system=yes group={{ app_group }}
+  tags:
+    - install
+    - user
+
+- name: Clone/Update git repo
+  git:  repo=https://github.com/kernelci/kernelci-reports.git
+        dest={{ install_base }}/{{ service_name }}
+        version={{ git_head }}
+        update=yes
+  notify:
+    - restart-kernelci-reports-get
+    - restart-kernelci-reports-send
+  tags:
+    - install
+    - app
+
+- name: Fix repo permissions
+  file: path={{ install_base }}/{{ service_name }}
+        state=directory
+        recurse=yes
+        owner={{ app_user }}
+        group={{ app_group }}
+  tags:
+    - install
+    - app
+
+- name: Install pip requirements
+  pip:  requirements={{ install_base }}/{{ service_name }}/requirements.txt
+        executable=pip3
+        virtualenv={{ install_base }}/.venv/{{ service_name }}
+        virtualenv_python=python3
+        extra_args="--upgrade"
+  notify:
+    - restart-kernelci-reports-get
+    - restart-kernelci-reports-send
+  tags:
+    - install
+    - app
+
+- name: Fix virtualenv permissions
+  file: path={{ install_base }}/.venv/{{ service_name }}
+        state=directory
+        recurse=yes
+        owner={{ app_user }}
+        group={{ app_group }}
+  tags:
+    - install
+    - app
+
+- name: Does /etc/linaro exists?
+  file: path=/etc/linaro
+        state=directory
+        owner=root
+        group=root
+  tags:
+    - install
+    - app
+
+- name: Install configuration file
+  template: src=kernelci-reports.cfg
+            dest=/etc/linaro/kernelci-reports.cfg
+            owner={{ app_user }}
+            group={{ app_group }}
+            mode=0644
+  tags:
+    - install
+    - app
+    - secrets

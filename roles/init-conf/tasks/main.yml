@@ -1,0 +1,42 @@
+---
+- name: Install kernelci-reports-get systemd service
+  template: src=get.service
+            dest=/etc/systemd/system/{{ get_service }}.service
+            mode=0644
+            owner=root
+            group=root
+  notify:
+    - reload-systemd
+  tags:
+    - init
+    - systemd
+
+- name: Enable kernelci-reports-get systemd service
+  command:  /bin/systemctl enable {{ get_service }}.service
+            creates=/etc/systemd/system/multi-user.target.wants/{{ get_service }}.service
+  notify:
+    - start-kernelci-reports-get
+  tags:
+    - init
+    - systemd
+
+- name: Install kernelci-reports-send systemd service
+  template: src=get.service
+            dest=/etc/systemd/system/{{ send_service }}.service
+            mode=0644
+            owner=root
+            group=root
+  notify:
+    - reload-systemd
+  tags:
+    - init
+    - systemd
+
+- name: Enable kernelci-reports-send systemd service
+  command:  /bin/systemctl enable {{ send_service }}.service
+            creates=/etc/systemd/system/multi-user.target.wants/{{ send_service }}.service
+  notify:
+    - start-kernelci-reports-send
+  tags:
+    - init
+    - systemd

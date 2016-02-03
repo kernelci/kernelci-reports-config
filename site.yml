@@ -1,0 +1,8 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: yes
+  roles:
+    - install-deps
+    - install-app
+    - init-conf
