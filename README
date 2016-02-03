@@ -1,0 +1,4 @@
+This is the Ansible configuration to deploy and setup the kernelci-reports
+system found at:
+
+    https://github.com/kernelci/kernelci-reports.
