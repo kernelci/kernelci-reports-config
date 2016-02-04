@@ -1,4 +1,25 @@
+Kernelci Reports Configuration
+==============================
+
 This is the Ansible configuration to deploy and setup the kernelci-reports
 system found at:
 
     https://github.com/kernelci/kernelci-reports.
+
+
+Requirements
+############
+
+Ansible >=2.0 is necessary to deploy the system.
+
+Usage
+#####
+
+In order to run the entire configuration, some "secrets" are necessary.
+Put the in a YAML file, and pass it to Ansible as:
+
+    -e "@/path/to/file/secrets.yml"
+
+To skip the secrets taks, just pass:
+
+    --skip-tags=secrets
