@@ -65,6 +65,15 @@
     - install
     - app
 
+- name: Does /var/lib/kernelci-reports exists?
+  file: path=/var/lib/kernelci-reports
+        state=directory
+        owner={{ app_user }}
+        group={{ app_group }}
+  tags:
+    - install
+    - app
+
 - name: Install configuration file
   template: src=kernelci-reports.cfg
             dest=/etc/linaro/kernelci-reports.cfg
