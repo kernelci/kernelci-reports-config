@@ -1,0 +1,20 @@
+[Unit]
+Description=Kernel CI Reports Get Service
+After=mongod.service
+
+[Service]
+Type=simple
+User={{ app_user }}
+Group={{ app_group }}
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+SyslogIdentifier={{ get_service }}
+LimitNOFILE=65536
+RestartSec=5
+Restart=always
+WorkingDirectory={{ install_base }}/{{ service_name }}/app
+ExecStart={{ install_base }}/.venv/{{ service_name }}/bin/python3 -OO -R kernelci-reports-get
+
+[Install]
+WantedBy=multi-user.target
