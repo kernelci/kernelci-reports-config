@@ -21,7 +21,7 @@
     - systemd
 
 - name: Install kernelci-reports-send systemd service
-  template: src=get.service
+  template: src=send.service
             dest=/etc/systemd/system/{{ send_service }}.service
             mode=0644
             owner=root
