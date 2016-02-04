@@ -6,4 +6,4 @@ service_name: kernelci-reports
 get_service: kernelci-reports-get
 send_service: kernelci-reports-send
 role: production
-backend_url=http://127.0.0.1:8888
+backend_url: http://127.0.0.1:8888
