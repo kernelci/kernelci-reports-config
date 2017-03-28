@@ -1,6 +1,6 @@
 ---
 - name: Install OS dependencies
-  apt:  pkg={{ item }}
+  apt:  pkg="{{ item }}"
         state=latest
         update_cache=yes
   with_items:
@@ -33,7 +33,7 @@
     - deps
 
 - name: Install MongoDB
-  apt:  pkg={{ item }}
+  apt:  pkg="{{ item }}"
         state=latest
   with_items:
     - mongodb-org
